@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title></title>
+
+  <script src="setting.js"></script>
+  <script src="Cookie.js"></script>
+  <script src="dateTime.js"></script>
+  <script src="HTTP2024.js"></script>
+
+  <script>
+    //respiratoryRate.js
+
+    var jsonObj = {
+      "resourceType": "Observation",
+      "id": "Scen4ObservationCaloriesPerDay",
+      "text": {
+        "status": "generated",
+        "div": "<div xmlns=\"http://www.w3.org/1999/xhtml\"><p><b>Generated Narrative: Observation</b><a name=\"Scen4ObservationCaloriesPerDay\"> </a></p><div style=\"display: inline-block; background-color: #d9e0e7; padding: 6px; margin: 4px; border: 1px solid #8da1b4; border-radius: 5px; line-height: 60%\"><p style=\"margin-bottom: 0px\">Resource Observation &quot;Scen4ObservationCaloriesPerDay&quot; </p></div><p><b>status</b>: final</p><p><b>category</b>: Activity <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\"> (<a href=\"http://terminology.hl7.org/5.0.0/CodeSystem-observation-category.html\">Observation Category Codes</a>#activity)</span>, Physical Activity <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\"> (<a href=\"CodeSystem-pa-temporary-codes.html\">Temporary Codes</a>#PhysicalActivity)</span></p><p><b>code</b>: Calories burned in 24 hour Calculated <span style=\"background: LightGoldenRodYellow; margin: 4px; border: 1px solid khaki\"> (<a href=\"https://loinc.org/\">LOINC</a>#41979-6)</span></p><p><b>subject</b>: <a href=\"Patient-Scen4PatientScarborough.html\">Patient/Scen4PatientScarborough: Jessica Scarborough</a> &quot; SCARBOROUGH&quot;</p><p><b>effective</b>: 2023-09-11 12:00:00-0700</p><p><b>performer</b>: <a href=\"Patient-Scen4PatientScarborough.html\">Patient/Scen4PatientScarborough: Jessica Scarborough</a> &quot; SCARBOROUGH&quot;</p><p><b>value</b>: 629 kilokalories per day<span style=\"background: LightGoldenRodYellow\"> (Details: UCUM code kcal/d = 'kcal/d')</span></p></div>"
+      },
+      "status": "final",
+      "category": [
+        {
+          "coding": [
+            {
+              "system": "http://terminology.hl7.org/CodeSystem/observation-category",
+              "code": "activity"
+            }
+          ]
+        },
+        {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/us/physical-activity/CodeSystem/pa-temporary-codes",
+              "code": "PhysicalActivity"
+            }
+          ]
+        }
+      ],
+      "code": {
+        "coding": [
+          {
+            "system": "http://loinc.org",
+            "code": "41979-6",
+            "display": "Calories burned in 24 hour Calculated"
+          }
+        ]
+      },
+      "subject": {
+        "reference": "Patient/34597018",
+        "display": "神傳言"
+      },
+      "effectiveDateTime": "2023-09-11T12:00:00-07:00",
+      "performer": [
+        {
+          "reference": "Patient/34597018",
+          "display": "神傳言"
+        }
+      ],
+      "valueQuantity": {
+        "value": 629,
+        "unit": "kilokalories per day",
+        "system": "http://unitsofmeasure.org",
+        "code": "kcal/d"
+      }
+    };
+
+    function postData() {
+      jsonObj.valueQuantity.value = parseFloat(document.getElementById("resRate").value);
+      jsonObj.effectiveDateTime = getFormattedTime();
+      
+      var jsonStr = JSON.stringify(jsonObj);
+      var apiURL = FHIRrootURL + "Observation";
+      sendHttpPost(apiURL, jsonStr, callBack);
+    }
+
+    function callBack(ret) {
+      console.log(ret);
+    }
+  </script>
+
+</head>
+
+<body style="height: 780px">
+  <p>請輸入24小時消耗卡路里</p>
+  <input id="Button1" onclick="postData()" type="button" value="postData" /><br />
+  卡路里: <input type="text" id="resRate" /> <br />
+</body>
+
+</html>
